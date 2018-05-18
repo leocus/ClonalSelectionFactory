@@ -1,6 +1,6 @@
 import math
 from random import random
-
+from copy import deepcopy
 
 class ClonALG:
     def __init__(self):
@@ -17,7 +17,7 @@ class ClonALG:
     def clone_antibodies_fcn(self, antibodies, clone_rate):
         clones = []
         for a in antibodies:
-            clones += [a] * int(math.ceil(len(antibodies) * a.affinity * clone_rate))
+            clones += [deepcopy(a)] * int(math.ceil(len(antibodies) * a.affinity * clone_rate))
         return clones
 
     def mutation_fcn(self, clones, mutation_exp):
