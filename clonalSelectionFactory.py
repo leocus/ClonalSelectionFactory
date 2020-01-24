@@ -30,7 +30,7 @@ class ClonALG:
         antibodies = self.remove_antibodies(antibodies)
         return sorted(antibodies, key=lambda x: x.affinity, reverse=True)
 
-    def stop_cryterion(self):
+    def stop_criterion(self):
         raise NotImplemented()
 
     def remove_antibodies(self, antibodies):
@@ -79,7 +79,7 @@ class ClonALG:
         if verbose:
             print("Antibodies have been generated")
 
-        while not self.stop_cryterion():
+        while not self.stop_criterion():
             # Increment the iteration number
             self._iteration += 1
 
