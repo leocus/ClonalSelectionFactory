@@ -27,14 +27,14 @@ class ClonALG:
         return clones
 
     def selection_fcn(self, antibodies):
-        antibodies = self.remove_antibodies(antibodies)
         return sorted(antibodies, key=lambda x: x.affinity, reverse=True)
 
     def stop_criterion(self):
         raise NotImplemented()
 
-    def remove_antibodies(self, antibodies):
-        raise NotImplemented()
+    def remove_antibodies(self, antibodies, max_antibodies):
+        antibodies = self.selection_fcn(antibodies)[:max_antibodies]
+        return antibodies
 
     def print_info(self, iteration):
         raise NotImplemented()
@@ -99,10 +99,7 @@ class ClonALG:
             self._antibodies += clones
 
             # This is needed in order to remove identical/unnecessary antibodies
-            self._antibodies = self.remove_antibodies(self._antibodies)
-
-            # Selection of the best antibodies
-            self._antibodies = self.selection_fcn(self._antibodies)[:max_antibodies]
+            self._antibodies = self.remove_antibodies(self._antibodies, max_antibodies)
 
             # Assignment of the best antibodies to the memory set
             self.memoryset = self._antibodies[:to_memory]
