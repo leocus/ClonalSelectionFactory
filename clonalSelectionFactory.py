@@ -17,7 +17,9 @@ class ClonALG:
     def clone_antibodies_fcn(self, antibodies, clone_rate):
         clones = []
         for a in antibodies:
-            clones += [deepcopy(a)] * int(math.ceil(len(antibodies) * a.affinity * clone_rate))
+            clones += [deepcopy(a) for _ in range(int(math.ceil(len(antibodies) * a.affinity * clone_rate)))]
+        for c in clones:
+            c.affinity = 0
         return clones
 
     def mutation_fcn(self, clones, mutation_exp):
@@ -104,11 +106,12 @@ class ClonALG:
             # Assignment of the best antibodies to the memory set
             self.memoryset = self._antibodies[:to_memory]
 
+            if verbose:
+                self.print_info(iteration=self._iteration)
+
             if len(self._antibodies) - num_remove > 0:
                 for i in range(len(self._antibodies) - num_remove, len(self._antibodies)):
                     self._antibodies[i] = self.random_antibody_fcn()
 
-            if verbose:
-                self.print_info(iteration=self._iteration)
 
         return self.memoryset
